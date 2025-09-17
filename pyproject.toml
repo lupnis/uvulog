@@ -15,7 +15,4 @@ license = { text = "MIT" }
 homepage = "https://github.com/lupnis/uvulog"
 keywords = ["logger", "logging", "console", "file", "colored", "log rotation"]
 
-[project.dependencies]
-filelock = "*"
-
-[project.optional-dependencies]
+dependencies = ["filelock"]
