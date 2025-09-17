@@ -2,9 +2,9 @@
 
 A simple logger for console and file logging, with colored output and log rotation.
 
-[![human-coded](https://img.shields.io/badge/human-coded-green?style=for-the-badge)](mailto:human-coded)
+![human-coded](https://img.shields.io/badge/human-coded-green?style=for-the-badge)
 <span> </span>
-[![llm-comments and documents](https://img.shields.io/badge/llm-comments%20and%20documents-indigo?style=for-the-badge&logo=openai)](mailto:comments%20and%20documents)
+![llm-documents](https://img.shields.io/badge/llm-documents-indigo?style=for-the-badge&logo=openai)
 
 ## Features
 
