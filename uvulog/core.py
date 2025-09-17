@@ -381,7 +381,7 @@ class SourceFileRenderBlock(BaseRenderBlock):
 
     def render(self, level: Levels = Levels.INFO, fmt: Styled = Styled(), *args: Any, **kwargs: Any) -> Styled:
         file_name, _, _, _ = traceback.extract_stack()[-6:][0]
-        return super(SourceFileRenderBlock, self).render(level, fmt, os.path.relpath(file_name))
+        return super(SourceFileRenderBlock, self).render(level, fmt, file_name)
 
 
 class SourceLineRenderBlock(BaseRenderBlock):

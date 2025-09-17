@@ -13,7 +13,7 @@ URL = 'https://github.com/lupnis/uvulog'
 EMAIL = 'lupnisj@gmail.com'
 AUTHOR = 'Lupnis J H'
 REQUIRES_PYTHON = '>=3.8.0'
-VERSION = '1.0.2'
+VERSION = '1.0.3'
 REQUIRED = [
     "filelock"
 ]
