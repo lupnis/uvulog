@@ -12,7 +12,6 @@ authors = [
     { name = "Lupnis J H", email = "lupnisj@gmail.com" }
 ]
 license = { text = "MIT" }
-homepage = "https://github.com/lupnis/uvulog"
 keywords = ["logger", "logging", "console", "file", "colored", "log rotation"]
 
 dependencies = ["filelock"]
