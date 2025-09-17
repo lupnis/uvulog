@@ -20,10 +20,7 @@ jobs:
           submodules: 'recursive'
 
       - name: build wheels
-        uses: pypa/cibuildwheel@v2.16.5
-        env:
-          CIBW_BUILD_FRONTEND: build
-          CIBW_SKIP: "*-win32 *-manylinux_i686 pp*"
+        run: pipx run build --wheel
 
       - uses: actions/upload-artifact@v4
         with:
