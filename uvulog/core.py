@@ -119,7 +119,7 @@ class Styles(object):
         return f"\x1b[{code}m"
 
     @staticmethod
-    def make_colors_prefix(*codes: List[Any]) -> str:
+    def make_colors_prefix(codes: List[Any] = []) -> str:
         """Combine multiple codes into a single prefix.
 
         Note: the default empty list here mirrors the original source but using
