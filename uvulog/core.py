@@ -573,7 +573,7 @@ DEFAULT_LOGGER_CONFIG: Dict[str, Any] = {
 # -------------------------
 
 
-class ConsoleLogWritter(object):
+class ConsoleLogWriter(object):
     """A writer that outputs formatted logs to the console (stdout/stderr).
     """
 
@@ -882,6 +882,17 @@ class FileLogWriter(object):
         return self.log(Levels.CRITICAL, fmt, *args, **kwargs)
 
 
+class PlaceholderWriter(object):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        ...
+
+    def __getattr__(self, name: str) -> Any:
+        return self._no_op
+
+    def _no_op(self, *args: Any, **kwargs: Any) -> None:
+        ...
+
+
 # -------------------------
 # Public Logger wrapper
 # -------------------------
@@ -892,27 +903,31 @@ class Logger(object):
 
     def __init__(self, config: Optional[Dict[str, Any]] = DEFAULT_LOGGER_CONFIG, **update_configs: Any) -> None:
         config = {**config, **update_configs}
-        self.console_logger: Optional[ConsoleLogWritter] = None
-        self.file_logger: Optional[FileLogWriter] = None
+        self.console_logger = PlaceholderWriter()
+        self.file_logger = PlaceholderWriter()
         if "logger_name" in config:
             self.logger_name = config["logger_name"]
         else:
             self.logger_name = "uvu"
         if "console" in config and config["console"].get("enabled", False) == True:
-            self.console_logger = ConsoleLogWritter(
+            self.console_logger = ConsoleLogWriter(
                 self.logger_name, config["console"])
         if "file" in config and config["file"].get("enabled", False) == True:
             self.file_logger = FileLogWriter(self.logger_name, config["file"])
 
+    def __enter__(self) -> 'Logger':
+        return self
+
+    def __exit__(self, _exc_type: Any, _exc_value: Any, _exc_traceback: Any) -> None:
+        self.flush()
+
     def flush(self) -> None:
-        if self.file_logger is not None:
-            self.file_logger.flush()
+        self.file_logger.flush()
+        self.file_logger._close_file_handle()
 
     def log(self, level: Levels, fmt: Styled, *args: Any, **kwargs: Any) -> None:
-        if self.console_logger is not None:
-            self.console_logger.log(level, fmt, *args, **kwargs)
-        if self.file_logger is not None:
-            self.file_logger.log(level, fmt, *args, **kwargs)
+        self.console_logger.log(level, fmt, *args, **kwargs)
+        self.file_logger.log(level, fmt, *args, **kwargs)
 
     # convenience shortcuts -------------------------------------------------
     def trace(self, fmt: Styled, *args: Any, **kwargs: Any) -> None:
